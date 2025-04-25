@@ -2,3 +2,4 @@
 
 # lop_nodejs
 
+Aulas de "Linguagem de Programação" do curso SENAI - Desenvolvimento de Sistemas.

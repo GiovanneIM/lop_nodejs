@@ -2,10 +2,14 @@
 
 # lop_nodejs
 
-Aulas de "Linguagem de Programação" do curso SENAI - Desenvolvimento de Sistemas.
-Linguagem utilizada: 
+<p>Aulas de "Linguagem de Programação" do curso SENAI - Desenvolvimento de Sistemas.</p>
+<br>
+
+<p>Linguagem utilizada:</p>
 <ul><li>JavaScript</li></ul>
-Ferramentas utilizadas: 
+<br>
+
+<p>Ferramentas utilizadas:</p>
 <ul>
   <li>Node.js</li>
   <li>Visual Studio Code</li>

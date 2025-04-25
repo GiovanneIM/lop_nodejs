@@ -6,7 +6,9 @@
 <br>
 
 <p>Linguagem utilizada:</p>
-<ul><li>JavaScript</li></ul>
+<ul>
+  <li>JavaScript</li>
+</ul>
 <br>
 
 <p>Ferramentas utilizadas:</p>
@@ -15,6 +17,7 @@
   <li>Node.js</li>
   <li>Visual Studio Code</li>
 </ul>
+<br>
 
 <p>Conteúdos:</p>
 <ul>

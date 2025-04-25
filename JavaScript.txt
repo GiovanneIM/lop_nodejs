@@ -1,0 +1,162 @@
+NodeJS 
+
+→ Saída
+    Console.Log("Saída")
+
+    • Concatenação
+        A Concatenação pode ser feita de três diferentes formas:
+            Passando mais de um atributo para o log:
+                console.log("Sua idade é:", 2025 - anoNascimento );
+
+            Usando o operador +:
+                console.log("Sua idade é: " + (2025 - anoNascimento));
+
+            Usando Template String:
+                console.log(`Sua idade é: ${2025 - anoNascimento}`);
+
+→ Entrada
+    A entrada em JavaScript é feita utilizando a biblioteca "readline-sync"
+    
+    Instalando a biblioteca:
+
+
+    Importando a biblioteca:
+        const readline = require('readline-sync');
+
+    Lendo entrada:
+        const nome = readline.question('Insira a variável');
+--------------------------------------------------------------------------
+
+→ Strings
+    Strings podem ser escritas entre aspas simples ('')
+    aspas duplas ("") ou crases (``).
+
+    Obs: A Template String (``) permite referência a outras Variáveis:
+        `Meu nome é ${nome}` ► nome é uma variável, cujo valor será concatenado na string.
+
+    EX:
+        'Olá, Mundo'
+        "Olá, Mundo"
+        ´Olá, Mundo´
+
+
+→ Variáveis
+    Em JS as Variáveis são declaradas da seguinte forma:
+        modificador nome
+
+    • Modificadores
+        const → Variáveis IMUTÁVEIS  e  LOCAIS
+        let   → Variáveis MUTÁVEIS   e  LOCAIS
+        var   → Variáveis MUTÁVEIS   e  GLOBAIS
+
+        Obs: Como const é Imutável, deve sempre ser atribuida assim que declarada.
+
+        Obs: Local é um espaço do código delimitado pos chaves ( {} ).
+
+    • Tipagem Dinâmica
+        Em JS não se declara o tipo de uma variável, pois o interpretador os atribui o tipo:
+
+        undefined → Variável sem valor atribuido
+        number → Armazena números
+        string  → Armazena cadeias de carácteres ou carácteres únicos
+        boolean → Armazena valores de Verdadeiro ou Falso
+
+→ Operadores aritméticos
+    +  Soma
+    -  Subtração
+    *  Multiplicação
+    /  Divisão
+    %  Módulo
+    ** Potência
+    =  Atribuição
+--------------------------------------------------------------------------
+
+→ Estruturas de condição
+    • if - else
+        if (condição)
+        {
+            Instrução I
+            Instrução II
+        }
+        else 
+        {
+            Instrução III
+        }
+
+--------------------------------------------------------------------------
+
+→ Laços de Repetição
+    • While:
+        Executa a AÇÃO enquanto a EXPRESSÃO for verdadeira.
+        while (EXPRESSÃO) { AÇÃO }
+    
+    • Do - While:
+        O código AÇÃO é executada uma vez antes de a espressão ser verificada.
+        Depois disso, realiza a AÇÃO enquanto a EXPRESSÃO for verdadeira.
+        do { AÇÃO } while (EXPRESSÃO)
+
+    • For:
+        ►Se a CONDIÇÃO for verdadeira, realiza a AÇÃO e incrementa a váriavel de interação.
+         A CONDIÇÃO é verificada a cada toda vez que a variavel é incrementada.
+            for (let i = 0; CONDIÇÃO; i ++){ AÇÃO }
+
+        ►For também pode ser usado para percorrer uma lista:
+            for (const nome of nomes){ console.log(nome) }
+
+--------------------------------------------------------------------------
+
+→ Arrays unidimensionais (Vetores) - 1xn
+    Em JS, arrays são declarados da seguinte forma:
+        const array  = ['''conteúdo''']
+
+    • Devido à tipagem dinâmica, é possível armazenar variáveis de diferentes tipos em um array:
+        const array = [1, "string", true]
+    
+    • Não é necessário atribuir o conteúdo ou tamanho de um array, em sua declaração:
+        const array = [] ► array vazio
+
+        array [10] = 10  ►  [ <10 empty items>, 10 ]
+
+→ Arrays multidimensionais (Matrizes) - nxn
+    Um array pode conter arrays
+        const array  = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+
+--------------------------------------------------------------------------
+
+→ Dicionários (Object)
+    Object é uma estrutura de dados que armazena valores na forma de pares chave-valor
+        const dicionario = { key : value}
+
+    • É possível obter um valor a partir de uma chave:
+        const pessoa = { nome : "Joao", idade : 15 };
+        const nome = pessoa["nome"];
+        const idade = pessoa.idade;
+
+        Nesse caso, nome recebe Joao e idade recebe 15.
+
+    • Em um Object a chave é sempre uma string, enquanto que um valor pode ser qualquer coisa.
+
+    • As chaves devem ser únicas, caso duas chaves sejam iguais, a última sobreescreverá a primeira:
+        const exemplo = {
+            nome: "Ana",
+            nome: "Carlos"
+        };
+
+        console.log(exemplo.nome); // Exibe "Carlos"
+
+--------------------------------------------------------------------------
+→Funções
+    Uma função na programação é um bloco de código reutilizável que executa uma tarefa específica
+
+    • Uma função pode receber PARÂMETROS, que são valores utilizáveis em seu código.
+    • Una função pode retornar um valor para uma variável.
+
+    Ex:
+        Declarando a função
+            function somar(a, b) {
+                return a + b;
+            }
+
+        Chamando a função    
+            let resultado = somar(3, 5);
+            console.log(resultado); // Saída: 8

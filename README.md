@@ -11,6 +11,16 @@
 
 <p>Ferramentas utilizadas:</p>
 <ul>
+  <li>Portugol Webstudio</li>
   <li>Node.js</li>
   <li>Visual Studio Code</li>
+</ul>
+
+<p>Conteúdos:</p>
+<ul>
+  <li>Laços de repetição</li>
+  <li>Arrays Unidimensionais</li>
+  <li>Arrays Multidimensionais</li>
+  <li>Dicionario</li>
+  <li>Funções</li>
 </ul>

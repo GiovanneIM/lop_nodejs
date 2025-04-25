@@ -3,3 +3,10 @@
 # lop_nodejs
 
 Aulas de "Linguagem de Programação" do curso SENAI - Desenvolvimento de Sistemas.
+Linguagem utilizada: 
+<ul><li>JavaScript</li></ul>
+Ferramentas utilizadas: 
+<ul>
+  <li>Node.js</li>
+  <li>Visual Studio Code</li>
+</ul>

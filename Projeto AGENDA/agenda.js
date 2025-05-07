@@ -347,13 +347,12 @@ function validarCadastro (nome, telefone, email) {
         return false;
     }
 
-    if (condition) {
-        
+    if (email.indexOf("@") == -1) {
+        console.log(VERMELHO + NEGRITO + `\nErro: O E-Mail deve seguir a seguinte identação: usuario@dominio.com` + NORMAL);
     }
 
     return true;
 }
-
 // ----------------------------------------------------------------------
 
 /* CÓDIGO PRINCIPAL */

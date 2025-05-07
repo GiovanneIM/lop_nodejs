@@ -1,0 +1,39 @@
+PROJETO AGENDA
+
+TELA PRINCIPAL
+
+    1. Adicionar contato
+    2. Listar contatos
+    3. Buscar contato
+    4. Remover contato
+    5. Salvar em disco (Arquivo txt)
+    6. Sair
+
+TELA ADICIONAR CONTATO
+    Nome: ----------
+    E-mail: -----------
+    Telefone: -----------
+    * contato adicionado no id __*
+
+    Nome: ----------
+    Endereço: -----------
+    Telefone: -----------
+    * contato adicionado no id __*
+
+    // Verificar repetição de chave
+    // Para voltar digite ...
+
+TELA BUSCAR CONTATO
+    Buscar por ID? NOME? ENDEREÇO? TELEFONE?
+
+TELA REMOVER CONTATO
+    Remover por ID? NOME? ENDEREÇO? TELEFONE?
+
+    // Exibir contatos a serem excluidos e pedir confirmação
+
+
+
+
+
+
+Obs: Carregar arquivo com contatos ao abrir programa.

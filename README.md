@@ -6,10 +6,10 @@
 
 <h3>Conteúdos Trabalhados</h3>
 <ul>
-
     <li>Tipos de variáveis</li>
-    <li>Estrutura de condição</li>
-    <li>Laços de repetição</li>
+    <li>Modificadores de variáveis (const, let e var)</li>
+    <li>Estrutura de condição (if, else, switch)</li>
+    <li>Laços de repetição (for, while e do-while)</li>
     <li>Arrays Uni e Multi dimensionais</li>
     <li>Objetos (Dicionários)</li>
     <li>Funções</li>
@@ -30,5 +30,4 @@
     <li>Permitir ao usuário socilitar que um contato armazenado na agenda seja deletado.</li>
     <li>Permitir ao usuário solicitar que os contatos armazenado na agenda sejam salvos em um arquivo.</li>
     <li>Permitir ao usuário solicitar que sejam carregados os contatos salvos em um arquivo</li>
-    <li></li>
 </ul>

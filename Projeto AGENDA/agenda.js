@@ -74,10 +74,13 @@ function adicionarContato () {
         const telefone = readline.question("Telefone: ");
         const email = readline.question("E-mail: ");
 
-        const valido = validarCadastro(nome, telefone, email)
+        const valido = validarCadastro(nome, telefone, email);
 
         // Se o cadastro for válido, adiciona o contato ao dicionário
-        if (valido) { contatos[nome] = {"telefone": telefone, "email": email} }
+        if (valido) { 
+            contatos[nome] = {"telefone": telefone, "email": email}
+            console.log(VERDE + NEGRITO + `${nome} foi cadastrado` + NORMAL);
+        }
     }
 
     console.clear()

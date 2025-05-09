@@ -2,6 +2,7 @@ const readline = require("readline-sync");
 const fs = require('fs');
 
 const contatos = {};
+let agenda = true;
 
 /* MODIFICADORES DE SAÍDA */
 const VERMELHO  = '\u001b[31m';
@@ -25,7 +26,7 @@ function menu () {
     console.log("[4] Apagar contatos");
     console.log("[5] Salvar contatos");
     console.log("[6] Carregar contatos");
-    console.log("[7] Sair\n");
+    console.log("[7] Sair");
 
     const opcao = validarOpcaoNumerica(1, 7)
 
@@ -86,6 +87,10 @@ function listarContatos () {
     console.clear();
     console.log(AMARELO + NEGRITO + "CONTATOS NA AGENDA" + NORMAL);
     
+    if (Object.keys(contatos).length == 0) {
+        mensagemErro("A agenda está vazia.");
+    }
+
     // Ordenando as chaves (Nomes) alfabeticamente
     const nomesOrdenados = Object.keys(contatos).sort();
 
@@ -104,6 +109,9 @@ function buscarContato () {
     
     const opcao = validarOpcaoNumerica(1, 3);
 
+    let correspondente = 0;
+
+
     switch (opcao) {
         // Busca por nome
         case 1:
@@ -111,7 +119,12 @@ function buscarContato () {
             for (const nomeContato in contatos) {
                 if (nomeContato.toLowerCase().includes(nome.toLowerCase())) {
                     imprimirContato(nomeContato)
+                    correspondente++;
                 }
+            }
+
+            if (correspondente === 0) {
+                mensagemErro("Nenhum contato corresponde à busca.");
             }
             break;
         
@@ -121,7 +134,12 @@ function buscarContato () {
             for (const nomeContato in contatos) {
                 if (contatos[nomeContato].telefone.includes(telefone) ) {
                     imprimirContato(nomeContato)
+                    correspondente++;
                 }
+            }
+
+            if (correspondente === 0) {
+                mensagemErro("Nenhum contato corresponde à busca.");
             }
             break;
 
@@ -131,7 +149,12 @@ function buscarContato () {
             for (const nomeContato in contatos) {
                 if (contatos[nomeContato].email.toLowerCase().includes(email.toLowerCase()) ) {
                     imprimirContato(nomeContato)
+                    correspondente++;
                 }
+            }
+
+            if (correspondente === 0) {
+                mensagemErro("Nenhum contato corresponde à busca.");
             }
             break;
     }
@@ -159,12 +182,12 @@ function apagarContatos () {
             delete contatos[nomeContato];
         }
 
-        console.log(VERMELHO + NEGRITO + "CONTATOS APAGADOS!" + NORMAL);
+        mensagemErro("CONTATOS APAGADOS!");
         console.log("Obs: Os contatos salvos em arquivo, continuam disponíveis para carregamento até que o arquivo seja sobreescrito.");
     }
     else
     {
-        console.log(VERMELHO + NEGRITO + "OPERAÇÃO CANCELADA!" + NORMAL);
+        mensagemErro("OPERAÇÃO CANCELADA")
     }
 
     pressioneParaContinuar()
@@ -234,7 +257,7 @@ function salvarContatos() {
 
         // Percorrendo o dicionário e adicionando as informações de cada contato como uma linha de csv
         for (const nome in contatos) {
-            contatosSalvar += `${nome}, ${contatos[nome].telefone}, ${contatos[nome].emails}\n`;
+            contatosSalvar += `${nome},${contatos[nome].telefone},${contatos[nome].email}\n`;
         }
         
         // Escrevendo no arquivo de contatos
@@ -255,36 +278,64 @@ function salvarContatos() {
 
 function carregarContatos () {
     console.log(AMARELO + NEGRITO + "\nDeseja carregar seus contatos de um arquivo CSV ou JSON?" + NORMAL);
-    console.log("[1] CSV \n[2] JSON");
+    console.log("[1] CSV \n[2] JSON \n[3] Cancelar");
 
-    opcao = validarOpcaoNumerica(1, 2);
+    const opcao = validarOpcaoNumerica(1, 3);
+
+    let numContatos = 0;
 
     if (opcao == 1){
         // Lendo o arquivo de contatos salvos e salvando cada linha como elemento de um vetor
         const contatosSalvos = fs.readFileSync("contatos.csv", 'utf8').split(/\r?\n/);
 
         // Percorrendo cada contato
-        for (const contato of contatosSalvos) {
-            const dados = contato.split(',');
+        for (const contato in contatosSalvos) {
+            const dados = contatosSalvos[contato].split(',');
 
-            // Verificando se a linhas está vazia e adicionando ao dicionário
+            // Verificando se a linhas não estão vazias e adicionando ao dicionário
             if (dados[0] != '') {
-                contatos[dados[0]] = {"telefone": dados[1], "email": dados[2]}
+                let valido;
+
+                if (dados[0] != undefined && dados[1] != undefined && dados[2] != undefined) {
+                    valido = validarCadastro(dados[0], dados[1], dados[2]);
+                }
+
+                if (valido){
+                    numContatos++;
+                    contatos[dados[0]] = {"telefone": dados[1], "email": dados[2]}
+                }
+                else{;
+                    mensagemErro(`Não foi possível cadastrar o contato na linha ${Number(contato) + 1} do arquivo csv.`);
+                }
             }
         }
 
-        console.log(AZUL + NEGRITO + "\nContatos carregados do arquivo CSV!" + NORMAL);
+        console.log(AZUL + NEGRITO + `\n${numContatos} contatos foram carregados do arquivo CSV!` + NORMAL);
     }
-    else{
+    else if (opcao == 2){
         const dados = fs.readFileSync("contatos.json", 'utf8');
         const contatosCarregados = JSON.parse(dados);
         
         for (const nome in contatosCarregados) {
-            contatos[nome] = contatosCarregados[nome];
+            let valido;
+
+            if (nome != undefined && contatosCarregados[nome].telefone != undefined && contatosCarregados[nome].email != undefined) {
+                valido = validarCadastro(nome, contatosCarregados[nome].telefone, contatosCarregados[nome].email);
+            }
+
+            if (valido){
+                numContatos++;
+                contatos[nome] = contatosCarregados[nome];
+            }
+            else{
+                mensagemErro(`Não foi possível cadastrar o contato ${nome} (${numContatos + 1}º contato do arquivo json).`);
+            }
         }
 
-        console.log(AZUL + NEGRITO + "\nContatos carregados do arquivo JSON!" + NORMAL);
+        console.log(AZUL + NEGRITO + `\n${numContatos} contatos foram carregados do arquivo JSON!` + NORMAL);
     }
+
+    console.log();
 }
 
 function sair() {
@@ -300,7 +351,9 @@ function sair() {
     }
 
     agenda = false;
+    console.log(VERDE + NEGRITO + "\nPROGRAMA ENCERRADO" + NORMAL);
 }
+
 
 
 function pressioneParaContinuar() {
@@ -311,13 +364,13 @@ function pressioneParaContinuar() {
 function validarOpcaoNumerica (a, b) {
     let opcao;
     do{
-        opcao = Number(readline.question(VERDE + NEGRITO + ">> " + NORMAL));
+        opcao = Number(readline.question(VERDE + NEGRITO + "\n>> " + NORMAL));
 
         if (a > opcao || opcao > b) {
-            console.log(VERMELHO + NEGRITO + `\nErro: O índice ${opcao} não corresponde à uma opção válida.` + NORMAL);
+            mensagemErro(`O índice ${opcao} não corresponde à uma opção válida.`)
         }
         else if (isNaN(opcao)){
-            console.log(VERMELHO + NEGRITO + `\nErro: Escolha o índice realacionado à uma opção.` + NORMAL);
+            mensagemErro("Escolha o índice relacionado à uma opção.")
         }
     }
     while (a > opcao || opcao > b || isNaN(opcao) );
@@ -332,32 +385,62 @@ function imprimirContato (nomeContato) {
 }
 
 function validarCadastro (nome, telefone, email) {
+    const nome_valido = validarNome(nome);
+    const telefone_valido = validarTelefone(telefone);
+    const email_valido = validarEmail(email);
+
+    if (nome_valido && telefone_valido && email_valido) {
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
+function validarNome (nome) {
     if (nome in contatos) {
-        console.log(VERMELHO + NEGRITO + `\nErro: Já existe um usuário cadastrado como ${nome}.` + NORMAL);
+        mensagemErro(`Já existe um usuário cadastrado como ${nome}.`)
         return false;
-    }
-
-    if (telefone[0] != '(' || telefone[3] != ')' || telefone[10] != '-' || telefone.length != 15) {
-        console.log(VERMELHO + NEGRITO + `\nErro: O telefone deve seguir a seguinte identação "(xx) xxxxx-xxxx", com cada 'x' sendo um digito numérico".` + NORMAL);
-        return false;
-    }
-    
-    if(isNaN(Number(telefone.substring(1,2))) || isNaN(Number(telefone.substring(5,9))) || isNaN(11,14)){
-        console.log(VERMELHO + NEGRITO + `\nErro: O telefone deve seguir a seguinte identação "(xx) xxxxx-xxxx", com cada 'x' sendo um digito numérico".` + NORMAL);
-        return false;
-    }
-
-    if (email.indexOf("@") == -1) {
-        console.log(VERMELHO + NEGRITO + `\nErro: O E-Mail deve seguir a seguinte identação: usuario@dominio.com` + NORMAL);
     }
 
     return true;
+}
+
+function validarTelefone(telefone) {
+    const regex = /^\(\d{2}\) \d{5}-\d{4}$/;
+
+    if (!regex.test(telefone)) {
+        mensagemErro("O telefone deve seguir o formato: (xx) xxxxx-xxxx. Com \'x\' sendo digitos numéricos.");
+        return false;
+    }
+
+    return true;
+}
+
+function validarEmail(email) {
+    const regex = /^[a-zA-Z0-9](?!.*\.\.)([a-zA-Z0-9._]{1,}[a-zA-Z0-9])?@[a-zA-Z0-9]{3,}\.[a-zA-Z]{2,}$/;
+
+    if (!regex.test(email)) {
+        mensagemErro("O E-Mail deve seguir o formato: usuario@dominio.extensão")
+        return false;
+    }
+
+    const usuario = email.split('@')[0];
+    if (usuario.length < 3) {
+        mensagemErro("A parte do \"usuário\" deve ter pelo menos 3 dígitos.")
+        return false;
+    }
+
+    return true;
+}
+
+function mensagemErro(mensagem) {
+    console.log( VERMELHO + NEGRITO + "\nErro: " + mensagem + NORMAL);    
 }
 // ----------------------------------------------------------------------
 
 /* CÓDIGO PRINCIPAL */
 
-let agenda = true;
 carregarContatos();
 while (agenda){
     menu();
